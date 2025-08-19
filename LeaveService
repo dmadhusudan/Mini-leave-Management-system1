@@ -1,0 +1,41 @@
+@Service
+public class LeaveService {
+    @Autowired
+    private LeaveRequestRepository leaveRepo;
+    @Autowired
+    private EmployeeRepository empRepo;
+
+    public String applyLeave(Long empId, LeaveRequest req) {
+        Employee emp = empRepo.findById(empId).orElse(null);
+        if (emp == null) return "Employee not found";
+        int days = (int) ChronoUnit.DAYS.between(req.getStartDate(), req.getEndDate()) + 1;
+        if (days > emp.getLeaveBalance()) return "Insufficient leave balance";
+        req.setEmployeeId(empId);
+        leaveRepo.save(req);
+        return "Leave request submitted";
+    }
+
+    public String approveLeave(Long leaveId) {
+        LeaveRequest req = leaveRepo.findById(leaveId).orElse(null);
+        if (req == null || !req.getStatus().equals("PENDING")) return "Invalid request";
+        Employee emp = empRepo.findById(req.getEmployeeId()).orElse(null);
+        int days = (int) ChronoUnit.DAYS.between(req.getStartDate(), req.getEndDate()) + 1;
+        emp.setLeaveBalance(emp.getLeaveBalance() - days);
+        req.setStatus("APPROVED");
+        leaveRepo.save(req);
+        empRepo.save(emp);
+        return "Leave approved";
+    }
+
+    public String rejectLeave(Long leaveId) {
+        LeaveRequest req = leaveRepo.findById(leaveId).orElse(null);
+        if (req == null || !req.getStatus().equals("PENDING")) return "Invalid request";
+        req.setStatus("REJECTED");
+        leaveRepo.save(req);
+        return "Leave rejected";
+    }
+
+    public List<LeaveRequest> getAllRequests() {
+        return leaveRepo.findAll();
+    }
+}
