@@ -1,0 +1,5 @@
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {}
+
+public interface LeaveRequestRepository extends JpaRepository<LeaveRequest, Long> {
+    List<LeaveRequest> findByEmployeeId(Long employeeId);
+}
