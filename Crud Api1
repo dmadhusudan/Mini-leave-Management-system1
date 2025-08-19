@@ -1,0 +1,11 @@
+leave-management-api/
+├── src/
+│   ├── main/
+│   │   ├── java/com/example/lms/
+│   │   │   ├── controller/
+│   │   │   ├── model/
+│   │   │   ├── repository/
+│   │   │   ├── service/
+│   │   │   └── LeaveManagementApplication.java
+│   │   └── resources/
+│   │       └── application.properties
