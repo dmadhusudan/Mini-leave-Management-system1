@@ -1,0 +1,13 @@
+@Entity
+public class LeaveRequest {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long employeeId;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String status = "PENDING"; // PENDING, APPROVED, REJECTED
+
+    // Getters and Setters
+}
