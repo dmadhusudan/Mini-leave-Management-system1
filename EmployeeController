@@ -1,0 +1,29 @@
+@RestController
+@RequestMapping("/api/employees")
+public class EmployeeController {
+    @Autowired
+    private EmployeeService service;
+
+    @PostMapping
+    public Employee create(@RequestBody Employee e) { return service.create(e); }
+
+    @GetMapping
+    public List<Employee> getAll() { return service.getAll(); }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> getById(@PathVariable Long id) {
+        return service.getById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    public Employee update(@PathVariable Long id, @RequestBody Employee e) {
+        return service.update(id, e);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
+    }
+}
