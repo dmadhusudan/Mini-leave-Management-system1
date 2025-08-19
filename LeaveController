@@ -1,0 +1,26 @@
+@RestController
+@RequestMapping("/api/leaves")
+public class LeaveController {
+    @Autowired
+    private LeaveService service;
+
+    @PostMapping("/apply/{empId}")
+    public String apply(@PathVariable Long empId, @RequestBody LeaveRequest req) {
+        return service.applyLeave(empId, req);
+    }
+
+    @PutMapping("/approve/{leaveId}")
+    public String approve(@PathVariable Long leaveId) {
+        return service.approveLeave(leaveId);
+    }
+
+    @PutMapping("/reject/{leaveId}")
+    public String reject(@PathVariable Long leaveId) {
+        return service.rejectLeave(leaveId);
+    }
+
+    @GetMapping
+    public List<LeaveRequest> getAll() {
+        return service.getAllRequests();
+    }
+}
