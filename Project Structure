@@ -1,0 +1,10 @@
+LeaveManagementSystem/
+├── Main.java
+├── models/
+│   ├── Employee.java
+│   └── LeaveRequest.java
+├── services/
+│   ├── EmployeeService.java
+│   └── LeaveService.java
+└── utils/
+    └── InputUtils.java
